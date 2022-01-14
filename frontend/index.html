@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-bl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table id="lista">---</table>
+    <Script>
+        // api url
+        const api_url = "http://localhost:3000/estoque";
+
+        //Definindo a função assíncrona
+        async function getapi(url) {
+            // Armazenando resposta
+            const response = await fetch(url);
+
+            // Armazenando dados em forma de JSON
+            var data = await response.json();
+            console.log(data);
+
+            exibirDados(data);
+        }
+
+        // Calling that async function
+        getapi(api_url);
+
+        //Função para definir innerHTML para tabela HTML
+        function exibirDados(data) {
+            let tab =
+                `<tr>
+                    <th>Nome do produto</th>
+                    <th>Qtd disponivel</th>
+                    <th>Valor unitario</th>
+                </tr>`;
+
+            //Loop para acessar todas as linhas
+            for (let produto of data) {
+                tab += `<tr> 
+                    <td>${produto.nomeProduto} </td>
+                    <td>${produto.qtdDisponivel}</td>
+                    <td>${produto.valorUnitario}</td>       
+                </tr>`;
+            }
+
+            // Setting innerHTML as tab variable
+            document.getElementById("lista").innerHTML = tab;
+        }
+    </Script>
+</body>
+
+</html>
